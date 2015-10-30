@@ -1,0 +1,24 @@
+<%= form_tag("/atms/datecard", method: "get",class: "form-inline") do %>
+    <div class="form-group">
+      <%= label_tag :server, "Server root",class: "control-label col-xs-2" %>
+      <div class="col-xs-10">
+	<%= text_field_tag :server,session[:server],class: "form-control"   %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= label_tag :datum, "Datum", class: "control-label col-xs-2"  %>
+      <div class="col-xs-10">
+        <%= text_field_tag :datum,  session[:datum], class: "form-control" %>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <%= label_tag :cardnumber, "Broj kartice", class:"control-label col-xs-2"  %>
+      <div class="col-xs-10">
+	<%= text_field_tag :cardnumber, session[:cardnumber], class: "form-control" %>
+	</div> 
+    </div>
+    
+    <%= submit_tag "Set",class:"btn btn-primary"  %>
+  <% end %>
