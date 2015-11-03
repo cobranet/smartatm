@@ -6,6 +6,7 @@ class AtmsController < ApplicationController
     url = params[:aa]
     @screen = params[:screen]
     @data = params[:data]
+
     if url != nil
       begin 
         @response = RestClient.get(url)
@@ -21,19 +22,69 @@ class AtmsController < ApplicationController
       end
     end   
   end
+
+  
   def extpayresult
     @response = JSON.parse(params[:response])
   end
+
+  
+  
   def clientinfo
     @url = "#{session[:server]}clients/1/#{session[:cardnumber]}"
      redirect_to atms_path(:aa => @url,:screen => 'clients')
-  end  
+  end
+  
   def kursna
     @url = "#{session[:server]}currencies/1/#{session[:datum]}"
     redirect_to atms_path(:aa => @url,:screen =>'currencies')
   end
-  def reservewithfee_frm
-  end  
+
+  
+  def reservewithfee
+    @url = "#{session[:server]}reservewithfee/1"
+    data = {}
+    data["sourceAccount"] = params["sourceAccount"]
+    data["destinationAccount"] = params["destinationAccount"]
+    data["transactionType"] = params["transactionType"]
+    data["sourceCurrency"] = params["sourceCurrency"]
+    data["destinationCurrency"] = params["destinationCurrency"]
+    data["amount"] = params["amount"].to_f
+    data["currencyDate"] = params["currencyDate"]
+    data["urgency"]=params["urgency"]
+    begin
+      @response = RestClient.post(@url,data.to_json,:content_type => 'application/json')
+    # rescue RestClient::ExceptionWithResponse => e
+    #     if e.response.code.to_s == "500" || e.response.code.to_s == "400"
+    #       @err = JSON.parse(e.response)
+    #     elsif e.response.code.to_s == "404" 
+    #       @err = {}
+    #       @err["errMessage"] = url
+    #       @err["errCode"] = e.response.code
+    #     end
+    end
+    redirect_to extpayresult_atms_path(:response=>@response)
+
+  end
+  def internalpayment_frm
+    @urnl = nil
+  end
+  def interpay
+    @url = "#{session[:server]}internalpayments/SMART01"
+    data = {}
+    data["sourceAccount"] = params["sourceAccount"]
+    data["destinationAccount"] = params["destinationAccount"]
+    data["transactionType"] = params["transactionType"]
+    data["sourceCurrency"] = params["sourceCurrency"]
+    data["destinationCurrency"] = params["destinationCurrency"]
+    data["amount"] = params["amount"].to_f
+    data["reservationId"] = params["reservationId"]
+    data["currencyDate"] = params["currencyDate"]
+    data["personalID"] = params["personalId"]
+    data["actualAmount"] = params["actualAmount"]
+    @response = RestClient.post(@url,data.to_json,:content_type => 'application/json')
+    redirect_to extpayresult_atms_path(:response=>@response)
+  end 
   def international_frm
     @url = nil
     redirect_to atms_path(:aa => @url,:screen =>'international_frm',:data => "data")
@@ -81,6 +132,7 @@ class AtmsController < ApplicationController
      session[:server] = params[:server]
      session[:cardnumber] = params[:cardnumber]
      session[:datum] = params[:datum]
+     session[:tid] = params[:tid]
      redirect_to  atms_path
   end
   

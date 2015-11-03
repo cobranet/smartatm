@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       get 'extpayresult'
       get 'reservewithfee_frm'
       post 'reservewithfee'
+      get 'internalpayment_frm'
+      post 'interpay'
     end
   end
   

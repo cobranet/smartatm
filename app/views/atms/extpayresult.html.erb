@@ -3,7 +3,14 @@
 <% end %>
 
 <% content_for :main do %>
-  <h2> Uspešno je kreiran nalog broj : <%= @response["transactionId"] %></h2> 
+<table class="table-striped">
+<% @response.keys.each do |key| %>
+<tr>
+  <td><%= key%></td>
+  <td><%= @response[key] %> </td>
+ </tr>
+<% end %>
+ </table>
 <% end %>
 
 <% if @err %>

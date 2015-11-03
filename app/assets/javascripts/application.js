@@ -13,4 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-datepicker
 //= require_tree .
+
+
+$(document).on('ready page:load', function () {
+   $('.datepick').datepicker({
+       format: "dd.mm.yyyy",
+       orientation: "bottom right"
+});
+
+});
+

@@ -1,0 +1,53 @@
+<% content_for :main do %>
+<h2>Internal payment</h2>
+<%= form_tag("/atms/interpay", method: "post" , class: "form-horizontal") do %>
+
+<div class="form-group">
+  <%= label_tag :sourceAccount, "Račun nalogodavca" , class: "control-label col-xs-2" %>
+  <div class="col-xs-4" %>
+    <%= text_field_tag :sourceAccount,nil,class: "form-control" %>
+  </div>
+   <%= label_tag :destinationAccount, "Račun korisnika" , class: "control-label col-xs-2" %>
+  <div class="col-xs-4" %>
+    <%= text_field_tag :destinationAccount,session["intpay"]["destinationAccount"],class: "form-control" %>
+  </div>
+</div>
+
+
+<div class="form-group">
+  <%= label_tag :sourceCurrency, "Valuta" , class: "control-label col-xs-1" %>
+  <div class="col-xs-3" %>
+    <%= text_field_tag :sourceCurrency,nil,class: "form-control" %>
+  </div>
+
+  <%= label_tag :amount, "Iznos" , class: "control-label col-xs-1" %>
+  <div class="col-xs-3" %>
+    <%= text_field_tag :amount,nil,class: "form-control" %>
+  </div>
+ 
+  <%= label_tag :reservationId, "ID rezervacije" , class: "control-label col-xs-1" %>
+  <div class="col-xs-3" %>
+    <%= text_field_tag :reservationId,nil,class: "form-control" %>
+  </div>
+</div>
+
+
+<div class="form-group">
+   <%= label_tag :actualAmount, "Actual amount" , class: "control-label col-xs-1" %>
+  <div class="col-xs-5" %>
+    <%= text_field_tag :actualAmount, "1",class: "form-control" %>
+  </div>
+
+    <%= label_tag :transactionType, "Tip transakcije" , class: "control-label col-xs-1" %>
+  <div class="col-xs-3" %>
+    <%= select_tag :transactionType, options_for_select(Atms.transaction_types),class: "form-control" %>
+  </div>
+
+  <div class="col-xs-1" %>
+    <%= submit_tag "OK",class:"btn btn-primary"  %>
+    </div>
+
+</div>
+
+<% end %>
+<% end %>
