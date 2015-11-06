@@ -10,9 +10,23 @@ class Atms
     w4.external.payment.cash
     w4.currency.exchange.cash
     )
+  @@ACCOUNT_TYPES = %w(
+    TR
+    ZR
+    DAS
+    DOS
+    SAS
+    SOS
+    CI
+    CO
+  )
   def intialize
   end
 
+  def self.account_types
+    @@ACCOUNT_TYPES
+  end
+  
   def self.transaction_types
     @@TRANSACTION_TYPES
   end

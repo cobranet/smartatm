@@ -2,8 +2,14 @@ Rails.application.routes.draw do
   resources :atms do
     collection do
       get 'datecard'
+
       get 'kursna'
+      get 'kursna_result'
+      
       get 'clientinfo'
+      get 'clientinfo_result'
+
+      
       get 'international_frm'
       post 'interform'
       get 'extpayresult'
@@ -11,6 +17,12 @@ Rails.application.routes.draw do
       post 'reservewithfee'
       get 'internalpayment_frm'
       post 'interpay'
+
+      get 'accounts_frm'
+      get 'accounts'
+
+      post 'set_accountout'
+      post 'set_accountin'
     end
   end
   

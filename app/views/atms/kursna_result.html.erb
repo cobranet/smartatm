@@ -1,4 +1,5 @@
-<%= "Kursna lista na dan : #{@data[0]['dateList']} broj #{@data[0]['listNumber']}" %>
+<% content_for :main do %>
+<h3><%= "Kursna lista na dan : #{@data[0]['dateList']} broj #{@data[0]['listNumber']}" %></h3>
 <table id="currency" class="table table-striped table-bordered table-condensed ">
       <thead>
         <tr>
@@ -30,3 +31,4 @@
   <%end%>
 </table>
 
+<% end %>

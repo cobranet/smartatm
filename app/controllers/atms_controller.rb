@@ -23,23 +23,80 @@ class AtmsController < ApplicationController
     end   
   end
 
+  def accounts_frm
+  end
+
+  def accounts
+    @url = "#{session[:server]}accounts/#{session[:tid]}/#{params[:client]}/#{params[:account_type]}"
+    begin
+      @response = RestClient.get(@url)
+      @data = JSON.parse(@response)
+    rescue RestClient::ExceptionWithResponse => e
+       if e.response.code.to_s == "500" || e.response.code.to_s == "400"
+          @err = JSON.parse(e.response)
+        elsif e.response.code.to_s == "404" 
+          @err = {}
+          @err["errMessage"] = @url
+          @err["errCode"] = e.response.code
+       end
+    end
+  end
   
   def extpayresult
     @response = JSON.parse(params[:response])
   end
 
   
-  
+  def clientinfo_result
+    url = params[:url] 
+    begin
+      @response = RestClient.get(url)
+      @data = JSON.parse(@response)
+      session[:clientId] = @data["clientId"]
+    rescue RestClient::ExceptionWithResponse => e
+       if e.response.code.to_s == "500" || e.response.code.to_s == "400"
+          @err = JSON.parse(e.response)
+        elsif e.response.code.to_s == "404" 
+          @err = {}
+          @err["errMessage"] = url
+          @err["errCode"] = e.response.code
+        end
+    end
+  end
+  def set_accountout
+    session["account"] = params["acc"]
+    redirect_to reservewithfee_frm_atms_path
+  end
+  def set_accountin
+    session["account"] = params["acc"]
+    redirect_to internalpayment_frm_atms_path
+  end
   def clientinfo
     @url = "#{session[:server]}clients/1/#{session[:cardnumber]}"
-     redirect_to atms_path(:aa => @url,:screen => 'clients')
+    redirect_to clientinfo_result_atms_path(:url => @url)
+  end
+
+  def kursna_result
+    url = params[:url] 
+    begin
+      @response = RestClient.get(url)
+      @data = JSON.parse(@response)
+    rescue RestClient::ExceptionWithResponse => e
+       if e.response.code.to_s == "500" || e.response.code.to_s == "400"
+          @err = JSON.parse(e.response)
+        elsif e.response.code.to_s == "404" 
+          @err = {}
+          @err["errMessage"] = url
+          @err["errCode"] = e.response.code
+        end
+    end
   end
   
   def kursna
     @url = "#{session[:server]}currencies/1/#{session[:datum]}"
-    redirect_to atms_path(:aa => @url,:screen =>'currencies')
+    redirect_to kursna_result_atms_path(:url => @url)
   end
-
+  
   
   def reservewithfee
     @url = "#{session[:server]}reservewithfee/1"
@@ -70,7 +127,7 @@ class AtmsController < ApplicationController
     @urnl = nil
   end
   def interpay
-    @url = "#{session[:server]}internalpayments/SMART01"
+    @url = "#{session[:server]}internalpayments/#{session[:tid]}"
     data = {}
     data["sourceAccount"] = params["sourceAccount"]
     data["destinationAccount"] = params["destinationAccount"]
@@ -87,7 +144,7 @@ class AtmsController < ApplicationController
   end 
   def international_frm
     @url = nil
-    redirect_to atms_path(:aa => @url,:screen =>'international_frm',:data => "data")
+  #  redirect_to atms_path(:aa => @url,:screen =>'international_frm',:data => "data")
   end
 
   def interform

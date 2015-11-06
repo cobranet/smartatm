@@ -5,11 +5,11 @@
 <div class="form-group">
   <%= label_tag :sourceAccount, "Račun nalogodavca" , class: "control-label col-xs-2" %>
   <div class="col-xs-4" %>
-    <%= text_field_tag :sourceAccount,nil,class: "form-control" %>
+    <%= text_field_tag :sourceAccount,session["account"],class: "form-control" %>
   </div>
    <%= label_tag :destinationAccount, "Račun korisnika" , class: "control-label col-xs-2" %>
   <div class="col-xs-4" %>
-    <%= text_field_tag :destinationAccount,session["intpay"]["destinationAccount"],class: "form-control" %>
+    <%= text_field_tag :destinationAccount,session["account"],class: "form-control" %>
   </div>
 </div>
 

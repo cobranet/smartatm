@@ -1,14 +1,14 @@
-<% content_for :datacard  do %>
+<% content_for :main  do %>
   <%= render "datacard" %>
+
+  <h3> Kartice na beornu </h3>
+  <ul class="list-group">
+    <li class="list-group-item">4044040000000014</li>
+  </ul>
+
+
 <% end %>
 
-<% if @data %>
-  <% content_for :main do %>
-    <% if @screen %>
-      <%= render @screen.to_s %>
-    <% end %> 
-  <%end%>
-<%end%>
 
 <% if @err %>
   <% content_for :error do %>
