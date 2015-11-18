@@ -17,12 +17,12 @@
 <div class="form-group">
   <%= label_tag :currency, "Valuta" , class: "control-label col-xs-1" %>
   <div class="col-xs-1" %>
-    <%= text_field_tag :currency,nil,class: "form-control" %>
+    <%= text_field_tag :currency,session["intpay"]["currency"],class: "form-control" %>
   </div>
 
   <%= label_tag :amount, "Iznos" , class: "control-label col-xs-1" %>
   <div class="col-xs-5" %>
-    <%= text_field_tag :amount,nil,class: "form-control" %>
+    <%= text_field_tag :amount,session["intpay"]["amount"],class: "form-control" %>
   </div>
  
   <%= label_tag :reservationId, "ID rezervacije" , class: "control-label col-xs-1" %>
@@ -48,7 +48,7 @@
 
   <%= label_tag :purposeCode, "Šifra plaćanja" , class: "control-label col-xs-1" %>
   <div class="col-xs-3" %>
-    <%= text_field_tag :purposeCode,"220",class: "form-control" %>
+    <%= text_field_tag :purposeCode,session["intpay"]["purposeCode"] ,class: "form-control" %>
   </div>
   
 </div>
@@ -56,7 +56,7 @@
 <div class="form-group">
   <%= label_tag :purpose, "Svrha" , class: "control-label col-xs-2" %>
   <div class="col-xs-10" %>
-    <%= text_field_tag :purpose,nil,class: "form-control" %>
+    <%= text_field_tag :purpose,session["intpay"]["purpose"],class: "form-control" %>
   </div>
 </div>
 
@@ -64,24 +64,24 @@
 <div class="form-group">
   <%= label_tag :benRefNumber, "Poziv na broj korisnika." , class: "control-label col-xs-2" %>
   <div class="col-xs-4" %>
-    <%= text_field_tag :benRefNumber,nil,class: "form-control" %>
+    <%= text_field_tag :benRefNumber,session["intpay"]["benRefNumber"],class: "form-control" %>
   </div>
 
   <%= label_tag :benRefModel, "Model korisnika" , class: "control-label col-xs-2" %>
   <div class="col-xs-4" %>
-    <%= text_field_tag :benRefModel,nil,class: "form-control" %>
+    <%= text_field_tag :benRefModel,session["intpay"]["benRefModel"],class: "form-control" %>
   </div>
 </div>
 
 <div class="form-group">
   <%= label_tag :benName, "Naziv korisnika." , class: "control-label col-xs-2" %>
   <div class="col-xs-4" %>
-    <%= text_field_tag :benName,nil,class: "form-control" %>
+    <%= text_field_tag :benName,session["intpay"]["benName"],class: "form-control" %>
   </div>
 
   <%= label_tag :benAddress, "Adresa" , class: "control-label col-xs-2" %>
   <div class="col-xs-4" %>
-    <%= text_field_tag :benAddress,nil,class: "form-control" %>
+    <%= text_field_tag :benAddress,session["intpay"]["benAddress"],class: "form-control" %>
   </div>
 </div>
 

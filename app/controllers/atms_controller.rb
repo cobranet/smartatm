@@ -22,7 +22,9 @@ class AtmsController < ApplicationController
       end
     end   
   end
-
+  def wadl
+    redirect_to "#{session[:server]}application.wadl" 
+  end
   def accounts_frm
   end
 
@@ -77,7 +79,7 @@ class AtmsController < ApplicationController
   end
 
   def kursna_result
-    url = params[:url] 
+    url = params[:url]
     begin
       @response = RestClient.get(url)
       @data = JSON.parse(@response)
@@ -87,6 +89,42 @@ class AtmsController < ApplicationController
         elsif e.response.code.to_s == "404" 
           @err = {}
           @err["errMessage"] = url
+          @err["errCode"] = e.response.code
+        end
+    end
+
+  end
+  
+  def template
+    @url = "#{session[:server]}template/#{session[:tid]}/#{params[:ID]}"
+    begin
+      @response = RestClient.get(@url)
+      @data = JSON.parse(@response)
+      session["intpay"] = @data
+    rescue RestClient::ExceptionWithResponse => e
+       if e.response.code.to_s == "500" || e.response.code.to_s == "400"
+          @err = JSON.parse(e.response)
+        elsif e.response.code.to_s == "404" 
+          @err = {}
+          @err["errMessage"] = @url
+          @err["errCode"] = e.response.code
+        end
+    end
+  end
+  
+  def templates
+    @url = "#{session[:server]}templates/#{session[:tid]}"
+    
+    begin
+      @response = RestClient.get(@url)
+      @data = JSON.parse(@response)
+
+    rescue RestClient::ExceptionWithResponse => e
+       if e.response.code.to_s == "500" || e.response.code.to_s == "400"
+          @err = JSON.parse(e.response)
+        elsif e.response.code.to_s == "404" 
+          @err = {}
+          @err["errMessage"] = @url
           @err["errCode"] = e.response.code
         end
     end
@@ -121,6 +159,7 @@ class AtmsController < ApplicationController
     #     end
     end
     redirect_to extpayresult_atms_path(:response=>@response)
+    
 
   end
   def internalpayment_frm
@@ -141,12 +180,34 @@ class AtmsController < ApplicationController
     data["actualAmount"] = params["actualAmount"]
     @response = RestClient.post(@url,data.to_json,:content_type => 'application/json')
     redirect_to extpayresult_atms_path(:response=>@response)
+    
   end 
   def international_frm
     @url = nil
   #  redirect_to atms_path(:aa => @url,:screen =>'international_frm',:data => "data")
   end
 
+  def reversal
+    @url = "#{session[:server]}reversal/#{session[:tid]}/#{params[:reservationid]}"
+    begin
+      @response = RestClient.post(@url,nil,:content_type => 'application/json')
+    rescue RestClient::ExceptionWithResponse => e
+        if e.response.code.to_s == "500" || e.response.code.to_s == "400"
+          @err = JSON.parse(e.response)
+          raise @err
+        elsif e.response.code.to_s == "404" 
+          @err = {}
+          @err["errMessage"] = @url
+          @err["errCode"] = e.response.code
+        end
+    end
+    redirect_to reversal_frm_atms_path
+  end
+
+  
+  def reversal_frm
+  end
+  
   def interform
     @url = "#{session[:server]}externalpayments/1"
     data = {}

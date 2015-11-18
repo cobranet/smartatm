@@ -15,13 +15,17 @@
 
 
 <div class="form-group">
-  <%= label_tag :sourceCurrency, "Valuta" , class: "control-label col-xs-1" %>
-  <div class="col-xs-3" %>
+  <%= label_tag :sourceCurrency, "Source currency" , class: "control-label col-xs-1" %>
+  <div class="col-xs-1" %>
     <%= text_field_tag :sourceCurrency,nil,class: "form-control" %>
+  </div>
+  <%= label_tag :destinationCurrency, "Destinaton currency" , class: "control-label col-xs-1" %>
+  <div class="col-xs-1" %>
+    <%= text_field_tag :destinationCurrency,nil,class: "form-control" %>
   </div>
 
   <%= label_tag :amount, "Iznos" , class: "control-label col-xs-1" %>
-  <div class="col-xs-3" %>
+  <div class="col-xs-1" %>
     <%= text_field_tag :amount,nil,class: "form-control" %>
   </div>
  

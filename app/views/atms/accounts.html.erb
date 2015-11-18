@@ -9,7 +9,8 @@
       <th>Availble</th>
       <th>Alias</th>
       <th>Type</th>
-      <th>Currency</th>
+      <th>Currency</th>,
+      <th>Basic</th>
     <% @data.each do |account| %>
     <tr>
       <td><%= account["accountTypeDescription"]  %></td>
@@ -19,6 +20,7 @@
       <td><%= account["accountAlias"]  %></td>
       <td><%= account["accountType"]  %></td>
       <td><%= account["currencyCode"]  %></td>
+      <td><%= account["basic"]  %></td>
       <td><%= button_to 'CashOut',set_accountout_atms_path(acc: account["account"]),method: "post",class:"btn btn-large btn-default"  %></td>
       <td><%= button_to 'CashIn',set_accountin_atms_path(acc: account["account"]),method: "post",class:"btn btn-large btn-default"  %></td>
     </tr>

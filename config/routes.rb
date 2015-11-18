@@ -20,11 +20,18 @@ Rails.application.routes.draw do
 
       get 'accounts_frm'
       get 'accounts'
-
+      get 'templates'
+      get 'reversal_frm'
+      post 'reversal'
+      get 'template'
       post 'set_accountout'
       post 'set_accountin'
+
+      get 'wadl'
     end
   end
+    
+    get 'atms/template/:tid/:ID' , to: 'atms#template'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
